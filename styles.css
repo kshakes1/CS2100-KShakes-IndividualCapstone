@@ -10,12 +10,66 @@ body {
 
     margin: 0;
     font-family:Arial, Helvetica, sans-serif;
+    background-color: grey;
 
 }
 
-img {
+header {
 
-    max-width: 100%;
-    display: block;
+    /* border: 2px dotted black; */
+
+}
+
+#hero {
+
+    /* border: 2px dotted black; */
+    justify-content: center;
+    display: flex;
+
+}
+
+nav {
+
+    /* border: 2px dotted black; */
+    display: flex;
+    justify-content: center;
+
+}
+
+header img {
+
+    max-width: 20%;
+
+}
+
+#hero img {
+
+    width: 400px;
+    height: 400px;
+
+}
+
+#wrapper {
+
+    width: 90%;
+    min-height: 100vh;
+    margin: auto;
+    background-color: white;
+
+}
+
+nav ul li a{ 
+
+    text-decoration: none;
+
+}
+
+nav ul{
+
+    list-style-type: none;
+    display: flex;
+    gap: 100px;
+    padding-left: 0;
+    /* border: 2px dotted black; */
 
 }

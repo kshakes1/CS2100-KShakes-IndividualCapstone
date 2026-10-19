@@ -131,7 +131,7 @@ nav ul{
 
 }
 
-#collection-search-box {
+.searchbox {
 
     display: flex;
     align-items: center;
@@ -140,7 +140,7 @@ nav ul{
 
 }
 
-#card-display-box {
+.displaybox {
 
     list-style-type: none;
     padding: 20px;

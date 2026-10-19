@@ -65,7 +65,76 @@
 
             <section id="collection-screen" class="hide screen">
 
-                <h1>Collection</h1>
+                <h1>Your Collection</h1>
+
+                <fieldset id="collection-search-box" class="searchbox">
+
+                    <div>
+
+                        <label for="collection-searchbar">search by name</label>
+                        <input id="collection-searchbar" type="search" placeholder="e.g.pikachu">
+
+                    </div>
+
+                    <div>
+
+                    <label for="collection-type-dropdown">filter by type</label>
+                    <select name="types" id="collection-type-dropdown">
+                        <option value="all">All Types</option>
+                        <option value="normal">Normal</option>
+                        <option value="fire">Fire</option>
+                        <option value="water">Water</option>
+                        <option value="grass">Grass</option>
+                        <option value="electric">Electric</option>
+                        <option value="ice">Ice</option>
+                        <option value="fighting">Fighting</option>
+                        <option value="poison">Poison</option>
+                        <option value="ground">Ground</option>
+                        <option value="flying">Flying</option>
+                        <option value="psychic">Psychic</option>
+                        <option value="bug">Bug</option>
+                        <option value="rock">Rock</option>
+                        <option value="ghost">Ghost</option>
+                        <option value="dragon">Dragon</option>
+                        <option value="dark">Dark</option>
+                        <option value="steel">Steel</option>
+                        <option value="fairy">Fairy</option>
+                    </select>
+
+                    </div>
+                    
+                    <div>
+
+                    <label for="collection-sortby-dropdown">sort by</label>
+                    <select name="sort-by" id="collection-sortby-dropdown">
+                        <option value="number">Dex No.</option>
+                        <option value="name">Name</option>
+                    </select>
+
+                    </div>
+
+                    <div>
+
+                        <label for="collection-shiny-check">shiny only</label>
+                        <input type="checkbox" name="shiny-checkbox" id="collection-shiny-check">
+
+                    </div>
+                    
+                </fieldset>
+
+                <ul id="card-display-box" class="displaybox">
+
+                    <li class="card">
+
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif" alt="pikachu" class="card-thumbnail">
+
+                        <p class="card-name">Pikachu</p>
+                        <p class="card-id">No. 25</p>
+                        <p class="card-type">Electric</p>
+
+                    </li>
+
+                </ul>
 
             </section>
 

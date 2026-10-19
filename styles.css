@@ -130,3 +130,52 @@ nav ul{
     text-transform: capitalize;
 
 }
+
+#collection-search-box {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+
+}
+
+#card-display-box {
+
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    text-align: center;
+
+}
+
+.card {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 250px;
+    border: 2px dotted black;
+
+
+}
+
+.card img {
+
+    background-color: black;
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+    image-rendering: pixelated;
+
+}
+
+.card p {
+
+    margin: 0;
+
+}

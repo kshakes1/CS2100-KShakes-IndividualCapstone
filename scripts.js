@@ -7,6 +7,7 @@ const pokemonShiny = document.getElementById('shiny-value');
 const openBoxButton = document.getElementById('open-box-button');
 const resultCardImage = document.getElementById('result-card-photo');
 const collectionGrid = document.getElementById("card-display-box");
+const collectionMessage = document.getElementById('collection-empty-message');
 
 // variables for saving collection in local storage
 const savedCollection = localStorage.getItem("collection");
@@ -148,6 +149,16 @@ function createCard(data, isShiny) {
 }
 
 async function renderCollection() {
+
+    if (collection.length === 0) {
+
+        collectionMessage.textContent = "No Pokemon collected yet. Open your first box!";
+
+        return;
+
+    }
+
+    collectionMessage.textContent = "";
 
     collectionGrid.innerHTML = "";
 

@@ -21,6 +21,10 @@ collectionType.addEventListener("change", displayCollection);
 collectionSort.addEventListener("change", displayCollection);
 collectionShiny.addEventListener("change", displayCollection);
 
+const batchSize = 30;
+let batchOffset = 0;
+const speciesCount = 1025;
+
 // variables for saving collection in local storage
 const savedCollection = localStorage.getItem("collection");
 const collection = savedCollection ? JSON.parse(savedCollection) : [];
@@ -178,7 +182,7 @@ async function renderCollection() {
     }));
 
     displayCollection();
-    
+
 }
 
 /**
@@ -231,5 +235,13 @@ function displayCollection() {
 
     collectionGrid.replaceChildren();
     list.forEach(entry => collectionGrid.append(createCard(entry.data, entry.shiny)));
+
+}
+
+async function loadLibraryBatch() {
+
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${batchSize}&offset=${batchOffset}`;
+
+    //TODO: finish function lol
 
 }

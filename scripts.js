@@ -6,6 +6,7 @@ const pokemonType = document.getElementById('pokemon-type');
 const pokemonShiny = document.getElementById('shiny-value');
 const openBoxButton = document.getElementById('open-box-button');
 const resultCardImage = document.getElementById('result-card-photo');
+const collectionGrid = document.getElementById("card-display-box");
 
 // variables for saving collection in local storage
 const savedCollection = localStorage.getItem("collection");
@@ -33,6 +34,12 @@ swappers.forEach(swapper => {
         const currentScreenId = swapper.dataset.screen;
 
         document.getElementById(currentScreenId).classList.remove('hide');
+
+        if (currentScreenId === "collection-screen") {
+
+            renderCollection();
+
+        }
 
     });
 
@@ -92,7 +99,6 @@ function getRandomNumber(max) {
 
 /**
  * checks if a lootbox has been opened for the day
- * @param none
  * @returns {boolean} whether or not a lootbox has been opened today
  */
 function hasOpenedToday() {
@@ -106,4 +112,54 @@ function hasOpenedToday() {
 function lockOpenBox() {
     openBoxButton.disabled = true;
     openBoxMessage.textContent = "You've opened today's box. Come back tomorrow!";
+}
+
+function createCard(data, isShiny) {
+
+    const card = document.createElement("li");
+    card.classList.add("card");
+
+    const sprite = document.createElement("img");
+    sprite.src = isShiny
+                ? data.sprites.other.showdown.front_shiny || data.sprites.front_shiny
+                : data.sprites.other.showdown.front_default || data.sprites.front_default;
+    sprite.alt = isShiny ? `shiny ${data.name}` : data.name;
+
+    const name = document.createElement("p");
+    name.classList.add("card-name");
+    name.textContent = data.name;
+
+    const id = document.createElement("p");
+    id.classList.add("card-id");
+    id.textContent = `#${data.id}`;
+
+    const type = document.createElement("p");
+    type.classList.add("card-type");
+    type.textContent = data.types.map(t => t.type.name).join(", ");
+
+    card.append(sprite, name, id, type);
+
+    return card;
+
+}
+
+async function renderCollection() {
+
+    collectionGrid.innerHTML = "";
+
+    const results = await Promise.all(
+
+        collection.map(entry =>
+            fetch(`https://pokeapi.co/api/v2/pokemon/${entry.id}`)
+                .then(response => response.json())
+        )
+
+    );
+
+    results.forEach((data, i) => {
+
+        collectionGrid.append(createCard(data, collection[i].shiny));
+
+    });
+
 }

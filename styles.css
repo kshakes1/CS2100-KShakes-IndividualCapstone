@@ -158,7 +158,6 @@ nav ul{
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 250px;
     border: 2px dotted black;
 
 
@@ -177,5 +176,17 @@ nav ul{
 .card p {
 
     margin: 0;
+
+}
+
+.card-name {
+
+    text-transform: capitalize;
+
+}
+
+.card-type {
+
+    text-transform: capitalize;
 
 }

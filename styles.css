@@ -16,6 +16,7 @@ body {
 
 header {
 
+    background-color: black;
     /* border: 2px dotted black; */
 
 }
@@ -55,12 +56,8 @@ header img {
     min-height: 100vh;
     margin: auto;
     background-color: white;
-
-}
-
-nav ul li a{ 
-
-    text-decoration: none;
+    display: flex;
+    flex-direction: column;
 
 }
 
@@ -71,5 +68,11 @@ nav ul{
     gap: 100px;
     padding-left: 0;
     /* border: 2px dotted black; */
+
+}
+
+.hide {
+
+    display: none !important;
 
 }

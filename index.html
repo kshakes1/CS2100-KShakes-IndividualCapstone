@@ -13,11 +13,11 @@
 
         <header>
 
-            <img src="pokebox.png" alt="pokeboxes logo">
+            <button data-screen="hero"><img src="pokebox.png" alt="go to home screen"></button>
 
         </header>    
 
-        <section id="hero">
+        <section id="hero" class="screen">
 
             <img src="gimmighoulhero.png" alt="gimmighoul hero">
 
@@ -29,15 +29,39 @@
 
             <ul>
 
-                <li><a href="">Collection</a></li>
-                <li><a href="">Open Boxes</a></li>
-                <li><a href="">Library</a></li>
+                <li><button data-screen="collection-screen">Collection</button></li>
+                <li><button data-screen="open-box-screen">Open Boxes</button></li>
+                <li><button data-screen="library-screen">Library</button></li>
 
             </ul>
 
         </nav>
 
+        <main>
+
+            <section id="open-box-screen" class="hide screen">
+
+                <h1>Open Box</h1>
+
+            </section>
+
+            <section id="collection-screen" class="hide screen">
+
+                <h1>Collection</h1>
+
+            </section>
+
+            <section id="library-screen" class="hide screen">
+
+                <h1>Library</h1>
+
+            </section>
+
+        </main>
+
     </div>
+
+    
 
     <script src="scripts.js"></script>
         

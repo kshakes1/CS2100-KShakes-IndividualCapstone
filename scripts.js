@@ -9,6 +9,18 @@ const resultCardImage = document.getElementById('result-card-photo');
 const collectionGrid = document.getElementById("card-display-box");
 const collectionMessage = document.getElementById('collection-empty-message');
 
+const collectionSearch = document.getElementById("collection-searchbar");
+const collectionType = document.getElementById("collection-type-dropdown");
+const collectionSort = document.getElementById("collection-sortby-dropdown");
+const collectionShiny = document.getElementById("collection-shiny-check");
+
+let collectionEntries = [];
+
+collectionSearch.addEventListener("input", displayCollection);
+collectionType.addEventListener("change", displayCollection);
+collectionSort.addEventListener("change", displayCollection);
+collectionShiny.addEventListener("change", displayCollection);
+
 // variables for saving collection in local storage
 const savedCollection = localStorage.getItem("collection");
 const collection = savedCollection ? JSON.parse(savedCollection) : [];
@@ -148,33 +160,76 @@ function createCard(data, isShiny) {
 
 }
 
+/**
+ * Fetches every saved Pokémon, then displays them.
+ */
 async function renderCollection() {
+
+    const results = await Promise.all(
+        collection.map(entry =>
+            fetch(`https://pokeapi.co/api/v2/pokemon/${entry.id}`)
+                .then(response => response.json())
+        )
+    );
+
+    collectionEntries = results.map((data, i) => ({
+        data: data,
+        shiny: collection[i].shiny
+    }));
+
+    displayCollection();
+    
+}
+
+/**
+ * Filters and sorts the loaded collection, then draws the cards.
+ */
+function displayCollection() {
+
+    const search = collectionSearch.value.trim().toLowerCase();
+    const type = collectionType.value;
+    const sortBy = collectionSort.value;
+    const shinyOnly = collectionShiny.checked;
+
+    let list = collectionEntries.filter(entry => entry.data.name.includes(search));
+
+    if (type !== "all") {
+
+        list = list.filter(entry => entry.data.types.some(t => t.type.name === type));
+
+    }
+
+    if (shinyOnly) {
+
+        list = list.filter(entry => entry.shiny);
+
+    }
+
+    if (sortBy === "name") {
+
+        list.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+    } else {
+
+        list.sort((a, b) => a.data.id - b.data.id);
+
+    }
 
     if (collection.length === 0) {
 
         collectionMessage.textContent = "No Pokemon collected yet. Open your first box!";
 
-        return;
+    } else if (list.length === 0) {
+
+        collectionMessage.textContent = "No Pokemon match these filters.";
+
+    } else {
+
+        collectionMessage.textContent = "";
 
     }
 
-    collectionMessage.textContent = "";
-
-    collectionGrid.innerHTML = "";
-
-    const results = await Promise.all(
-
-        collection.map(entry =>
-            fetch(`https://pokeapi.co/api/v2/pokemon/${entry.id}`)
-                .then(response => response.json())
-        )
-
-    );
-
-    results.forEach((data, i) => {
-
-        collectionGrid.append(createCard(data, collection[i].shiny));
-
-    });
+    collectionGrid.replaceChildren();
+    list.forEach(entry => collectionGrid.append(createCard(entry.data, entry.shiny)));
 
 }

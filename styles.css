@@ -65,7 +65,9 @@ nav ul{
 
     list-style-type: none;
     display: flex;
-    gap: 100px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
     padding-left: 0;
     /* border: 2px dotted black; */
 
@@ -74,5 +76,51 @@ nav ul{
 .hide {
 
     display: none !important;
+
+}
+
+#open-box-screen {
+
+    display: flex;
+    flex-direction: column;
+    border: 2px dotted black;
+    align-items: center;
+    gap: 20px;
+
+}
+
+#lootbox {
+
+    display: flex;
+    height: 100px;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    font-size: 40px;
+
+}
+
+#result-card {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    max-width: 500px;
+    padding: 10px;
+    border: 2px dotted black;
+
+}
+
+#result-card-photo {
+
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background-color: black;
 
 }

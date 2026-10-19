@@ -1,7 +1,10 @@
-const swappers = document.querySelectorAll("[data-screen]");
+const swappers = document.querySelectorAll("[data-screen]"); 
 const screens = document.querySelectorAll('.screen');
 console.log(swappers);
 
+/**
+ * hides each screen when correlating button is clicked
+ */
 swappers.forEach(swapper => {
 
     swapper.addEventListener("click", () => {

@@ -7,6 +7,14 @@ const pokemonShiny = document.getElementById('shiny-value');
 const openBoxButton = document.getElementById('open-box-button');
 const resultCardImage = document.getElementById('result-card-photo');
 
+// variables for saving collection in local storage
+const savedCollection = localStorage.getItem("collection");
+const collection = savedCollection ? JSON.parse(savedCollection) : [];
+
+// variables for daily limit testing
+const TESTING = true;
+const openBoxMessage = document.getElementById("open-box-message");
+
 /**
  * hides each screen when correlating button is clicked
  */
@@ -30,7 +38,16 @@ swappers.forEach(swapper => {
 
 });
 
+/**
+ * rolls for random pokemon when button is clicked
+ */
 openBoxButton.addEventListener("click", async () => {
+
+    if (!TESTING && hasOpenedToday()) {
+
+        return;
+
+    }
 
     const pokemonId = getRandomNumber(1025);
     const isShiny = getRandomNumber(2) === 1;
@@ -51,10 +68,42 @@ openBoxButton.addEventListener("click", async () => {
                         ? `shiny ${data.name}`
                         : data.name;
 
+    collection.push({id: data.id, shiny: isShiny});
+    localStorage.setItem("collection", JSON.stringify(collection));
+
+    localStorage.setItem("lastOpened", new Date().toDateString());
+
+    if (!TESTING) {
+        lockOpenBox();
+    }
+
 });
 
+/**
+ * returns a random number from 1 to max, inclusive
+ * @param {number} max - the endpoint of the range of random numbers
+ * @returns {number} the random number picked
+ */
 function getRandomNumber(max) {
 
     return Math.floor(Math.random() * max) + 1;
 
+}
+
+/**
+ * checks if a lootbox has been opened for the day
+ * @param none
+ * @returns {boolean} whether or not a lootbox has been opened today
+ */
+function hasOpenedToday() {
+    return localStorage.getItem("lastOpened") === new Date().toDateString();
+}
+
+/**
+ * disables the open lootbox button and displays a message
+ * @returns {void}
+ */
+function lockOpenBox() {
+    openBoxButton.disabled = true;
+    openBoxMessage.textContent = "You've opened today's box. Come back tomorrow!";
 }

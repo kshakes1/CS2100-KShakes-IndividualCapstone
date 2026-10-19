@@ -107,13 +107,17 @@ function hasOpenedToday() {
 
 /**
  * disables the open lootbox button and displays a message
- * @returns {void}
+ * @returns {object}
  */
 function lockOpenBox() {
     openBoxButton.disabled = true;
     openBoxMessage.textContent = "You've opened today's box. Come back tomorrow!";
 }
 
+/**
+ * creates card using stored data
+ * @returns {void}
+ */
 function createCard(data, isShiny) {
 
     const card = document.createElement("li");

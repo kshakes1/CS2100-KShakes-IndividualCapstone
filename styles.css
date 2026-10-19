@@ -143,6 +143,7 @@ nav ul{
 #card-display-box {
 
     list-style-type: none;
+    padding: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
@@ -153,13 +154,11 @@ nav ul{
 .card {
 
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
     border: 2px dotted black;
-
 
 }
 

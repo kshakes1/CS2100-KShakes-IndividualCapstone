@@ -124,3 +124,9 @@ nav ul{
     background-color: black;
 
 }
+
+#result-card {
+
+    text-transform: capitalize;
+
+}

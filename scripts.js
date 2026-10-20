@@ -25,6 +25,13 @@ const batchSize = 30;
 let batchOffset = 0;
 const speciesCount = 1025;
 
+const libraryGrid = document.getElementById("library-display-box");
+const librarySearch = document.getElementById("library-searchbar");
+const libraryType = document.getElementById("library-type-dropdown");
+const librarySort = document.getElementById("library-sortby-dropdown");
+const libraryShiny = document.getElementById("library-shiny-check");
+const loadMoreButton = document.getElementById("library-load-more-button");
+
 // variables for saving collection in local storage
 const savedCollection = localStorage.getItem("collection");
 const collection = savedCollection ? JSON.parse(savedCollection) : [];
@@ -55,6 +62,16 @@ swappers.forEach(swapper => {
         if (currentScreenId === "collection-screen") {
 
             renderCollection();
+
+        }
+
+        if (currentScreenId === "library-screen") {
+
+            if (batchOffset === 0) {
+
+                loadLibraryBatch();
+
+            }
 
         }
 
@@ -102,6 +119,8 @@ openBoxButton.addEventListener("click", async () => {
     }
 
 });
+
+loadMoreButton.addEventListener("click", loadLibraryBatch);
 
 /**
  * returns a random number from 1 to max, inclusive
@@ -240,8 +259,28 @@ function displayCollection() {
 
 async function loadLibraryBatch() {
 
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${batchSize}&offset=${batchOffset}`;
+    loadMoreButton.disabled = true;
 
-    //TODO: finish function lol
+    const remaining = speciesCount - batchOffset;
+    const thisBatchSize = Math.min(batchSize, remaining);
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${thisBatchSize}&offset=${batchOffset}`;
+    const response = await fetch(url);
+    const listData = await response.json();
+
+    const batchData = await Promise.all(
+
+        listData.results.map(item => 
+
+            fetch(item.url)
+                .then(response => response.json())
+
+        )
+
+    );
+
+    batchData.forEach(entry => libraryGrid.append(createCard(entry, false)));
+    batchOffset += thisBatchSize;
+
+    loadMoreButton.disabled = batchOffset >= speciesCount;
 
 }

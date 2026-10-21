@@ -1,3 +1,8 @@
+@font-face {
+    font-family: myFonts;
+    src: url(pokefont.ttf);
+}
+
 *,
 *::before,
 *::after {
@@ -52,6 +57,15 @@ header {
     padding: 0;
     cursor: pointer;
     outline: inherit;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-family: myFonts;
+
+}
+
+#selector ul li button:hover {
+
+    transform: scale(1.1);
 
 }
 

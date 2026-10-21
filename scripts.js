@@ -6,14 +6,15 @@ const pokemonType = document.getElementById('pokemon-type');
 const pokemonShiny = document.getElementById('shiny-value');
 const openBoxButton = document.getElementById('open-box-button');
 const resultCardImage = document.getElementById('result-card-photo');
+
+// variables  and listeners for collection screen
+
 const collectionGrid = document.getElementById("card-display-box");
 const collectionMessage = document.getElementById('collection-empty-message');
-
 const collectionSearch = document.getElementById("collection-searchbar");
 const collectionType = document.getElementById("collection-type-dropdown");
 const collectionSort = document.getElementById("collection-sortby-dropdown");
 const collectionShiny = document.getElementById("collection-shiny-check");
-
 let collectionEntries = [];
 
 collectionSearch.addEventListener("input", displayCollection);
@@ -25,6 +26,8 @@ const batchSize = 30;
 let batchOffset = 0;
 const speciesCount = 1025;
 
+// variables and listeners for library screen
+
 const libraryGrid = document.getElementById("library-display-box");
 const librarySearch = document.getElementById("library-searchbar");
 const libraryType = document.getElementById("library-type-dropdown");
@@ -32,20 +35,22 @@ const librarySort = document.getElementById("library-sortby-dropdown");
 const libraryShiny = document.getElementById("library-shiny-check");
 const loadMoreButton = document.getElementById("library-load-more-button");
 const libraryMessage = document.getElementById('library-empty-message');
-
 librarySearch.addEventListener("input", doLibraryFilter);
+
 librarySort.addEventListener("change", doLibraryFilter);
 libraryType.addEventListener("change", doLibraryFilter);
 libraryShiny.addEventListener("change", doLibraryFilter);
-
+loadMoreButton.addEventListener("click", loadLibraryBatch);
 let fullLibraryList = [];
 let currentLibraryList = [];
 
 // variables for saving collection in local storage
+
 const savedCollection = localStorage.getItem("collection");
 const collection = savedCollection ? JSON.parse(savedCollection) : [];
 
-// variables for daily limit testing
+// variables for daily limit and testing
+
 const TESTING = true;
 const openBoxMessage = document.getElementById("open-box-message");
 
@@ -63,7 +68,6 @@ swappers.forEach(swapper => {
         });
         
         const currentScreenId = swapper.dataset.screen;
-
         document.getElementById(currentScreenId).classList.remove('hide');
 
         if (currentScreenId === "collection-screen") {
@@ -100,9 +104,8 @@ openBoxButton.addEventListener("click", async () => {
     }
 
     const pokemonId = getRandomNumber(1025);
-    const isShiny = getRandomNumber(2) === 1;
+    const isShiny = getRandomNumber(2) === 1; // shiny odds calculator
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
-
     const response = await fetch(url);
     const data = await response.json();
 
@@ -118,18 +121,20 @@ openBoxButton.addEventListener("click", async () => {
                         ? `shiny ${data.name}`
                         : data.name;
 
+    // saves data in collection and local storage
     collection.push({id: data.id, shiny: isShiny});
     localStorage.setItem("collection", JSON.stringify(collection));
-
     localStorage.setItem("lastOpened", new Date().toDateString());
 
     if (!TESTING) {
+
         lockOpenBox();
+
     }
 
 });
 
-loadMoreButton.addEventListener("click", loadLibraryBatch);
+
 
 /**
  * returns a random number from 1 to max, inclusive
@@ -147,7 +152,9 @@ function getRandomNumber(max) {
  * @returns {boolean} whether or not a lootbox has been opened today
  */
 function hasOpenedToday() {
+
     return localStorage.getItem("lastOpened") === new Date().toDateString();
+
 }
 
 /**
@@ -155,8 +162,10 @@ function hasOpenedToday() {
  * @returns {object}
  */
 function lockOpenBox() {
+
     openBoxButton.disabled = true;
     openBoxMessage.textContent = "You've opened today's box. Come back tomorrow!";
+
 }
 
 /**

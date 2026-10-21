@@ -31,9 +31,12 @@ const libraryType = document.getElementById("library-type-dropdown");
 const librarySort = document.getElementById("library-sortby-dropdown");
 const libraryShiny = document.getElementById("library-shiny-check");
 const loadMoreButton = document.getElementById("library-load-more-button");
+const libraryMessage = document.getElementById('library-empty-message');
 
 librarySearch.addEventListener("input", doLibraryFilter);
 librarySort.addEventListener("change", doLibraryFilter);
+libraryType.addEventListener("change", doLibraryFilter);
+libraryShiny.addEventListener("change", doLibraryFilter);
 
 let fullLibraryList = [];
 let currentLibraryList = [];
@@ -280,7 +283,7 @@ async function loadLibraryBatch() {
 
     );
 
-    batchData.forEach(entry => libraryGrid.append(createCard(entry, false)));
+    batchData.forEach(entry => libraryGrid.append(createCard(entry, libraryShiny.checked)));
     batchOffset += batchList.length;
 
     loadMoreButton.disabled = batchOffset >= currentLibraryList.length;
@@ -304,7 +307,7 @@ function resetLibrary() {
 
 }
 
-function doLibraryFilter() {
+async function doLibraryFilter() {
 
     const search = librarySearch.value.trim().toLowerCase();
     const type = libraryType.value;
@@ -313,9 +316,31 @@ function doLibraryFilter() {
 
     let list = fullLibraryList.filter(entry => entry.name.includes(search));
 
+    if (type !== "all") {
+
+        const typeUrl = `https://pokeapi.co/api/v2/type/${type}`;
+        const typeResponse = await fetch(typeUrl);
+        const typeData = await typeResponse.json();
+
+        const typeNames = typeData.pokemon.map(data => data.pokemon.name);
+
+        list = list.filter(entry => typeNames.includes(entry.name));
+
+    }
+    
     if (sortBy === "name") {
 
         list.sort((a, b) => a.name.localeCompare(b.name));
+
+    }
+
+    if (list.length === 0) {
+
+        libraryMessage.textContent = "No Pokemon match these filters.";
+
+    } else {
+
+        libraryMessage.textContent = "";
 
     }
 

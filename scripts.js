@@ -32,6 +32,9 @@ const librarySort = document.getElementById("library-sortby-dropdown");
 const libraryShiny = document.getElementById("library-shiny-check");
 const loadMoreButton = document.getElementById("library-load-more-button");
 
+librarySearch.addEventListener("input", doLibraryFilter);
+librarySort.addEventListener("change", doLibraryFilter);
+
 let fullLibraryList = [];
 let currentLibraryList = [];
 
@@ -293,3 +296,30 @@ async function fillLibrary() {
 
 }
 
+function resetLibrary() {
+
+    batchOffset = 0;
+    libraryGrid.replaceChildren();
+    loadLibraryBatch();
+
+}
+
+function doLibraryFilter() {
+
+    const search = librarySearch.value.trim().toLowerCase();
+    const type = libraryType.value;
+    const sortBy = librarySort.value;
+    const shinyOnly = libraryShiny.checked;
+
+    let list = fullLibraryList.filter(entry => entry.name.includes(search));
+
+    if (sortBy === "name") {
+
+        list.sort((a, b) => a.name.localeCompare(b.name));
+
+    }
+
+    currentLibraryList = list;
+    resetLibrary();
+
+}

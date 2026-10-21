@@ -287,3 +287,14 @@ async function loadLibraryBatch() {
     loadMoreButton.disabled = batchOffset >= speciesCount;
 
 }
+
+async function fillLibrary() {
+
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${speciesCount}&offset=0`;
+    const response = await fetch(url);
+    fullLibraryList.results = await response.json();
+    currentLibraryList = fullLibraryList.slice();
+
+}
+
+

@@ -188,6 +188,10 @@ function createCard(data, isShiny) {
 
     card.append(sprite, name, id, type);
 
+    const typeNames = data.types.map(t => t.type.name);
+    card.style.setProperty("--type-1", `var(--${typeNames[0]})`);
+    card.style.setProperty("--type-2", `var(--${typeNames[1] || typeNames[0]})`);
+
     return card;
 
 }

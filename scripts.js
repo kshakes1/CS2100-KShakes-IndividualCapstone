@@ -48,9 +48,7 @@ const openBoxMessage = document.getElementById("open-box-message");
  */
 swappers.forEach(swapper => {
 
-    swapper.addEventListener("click", () => {
-
-        console.log(swapper.dataset.screen);
+    swapper.addEventListener("click", async () => {
 
         screens.forEach(screen => {
 
@@ -70,7 +68,9 @@ swappers.forEach(swapper => {
 
         if (currentScreenId === "library-screen") {
 
-            if (batchOffset === 0) {
+            if (fullLibraryList.length === 0) {
+
+                await fillLibrary();
 
                 loadLibraryBatch();
 
@@ -264,15 +264,11 @@ async function loadLibraryBatch() {
 
     loadMoreButton.disabled = true;
 
-    const remaining = speciesCount - batchOffset;
-    const thisBatchSize = Math.min(batchSize, remaining);
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${thisBatchSize}&offset=${batchOffset}`;
-    const response = await fetch(url);
-    const listData = await response.json();
+    const batchList = currentLibraryList.slice(batchOffset, batchOffset + batchSize);
 
     const batchData = await Promise.all(
 
-        listData.results.map(item => 
+        batchList.map(item => 
 
             fetch(item.url)
                 .then(response => response.json())
@@ -282,9 +278,9 @@ async function loadLibraryBatch() {
     );
 
     batchData.forEach(entry => libraryGrid.append(createCard(entry, false)));
-    batchOffset += thisBatchSize;
+    batchOffset += batchList.length;
 
-    loadMoreButton.disabled = batchOffset >= speciesCount;
+    loadMoreButton.disabled = batchOffset >= currentLibraryList.length;
 
 }
 
@@ -292,9 +288,8 @@ async function fillLibrary() {
 
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${speciesCount}&offset=0`;
     const response = await fetch(url);
-    fullLibraryList.results = await response.json();
+    fullLibraryList = (await response.json()).results;
     currentLibraryList = fullLibraryList.slice();
 
 }
-
 

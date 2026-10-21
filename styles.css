@@ -31,6 +31,13 @@ header {
 
 }
 
+h1 {
+
+    text-align: center;
+    margin-top: 0;
+
+}
+
 #homebutton {
 
     background: none;
@@ -175,11 +182,59 @@ nav ul{
 
 }
 
+fieldset {
+
+    border: 1px solid;
+    border-radius: 10px;
+
+}
+
+.searchbox-field {
+
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    gap:5px;
+    color: rgb(0 0 0 / 50%)
+
+}
+
+#collection-screen {
+
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+
+}
+
+fieldset {
+
+    margin: 0 auto;
+
+}
+
+fieldset input{
+
+    padding: 10px;
+    border: 2 solid black;
+
+}
+
+fieldset select{
+
+    padding: 10px;
+
+}
+
 .searchbox {
 
     display: flex;
     align-items: center;
     justify-content: space-around;
+    padding: 25px;
+    width: 90%;
     gap: 10px;
 
 }

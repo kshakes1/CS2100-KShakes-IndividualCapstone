@@ -312,7 +312,6 @@ async function doLibraryFilter() {
     const search = librarySearch.value.trim().toLowerCase();
     const type = libraryType.value;
     const sortBy = librarySort.value;
-    const shinyOnly = libraryShiny.checked;
 
     let list = fullLibraryList.filter(entry => entry.name.includes(search));
 

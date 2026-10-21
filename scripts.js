@@ -32,6 +32,9 @@ const librarySort = document.getElementById("library-sortby-dropdown");
 const libraryShiny = document.getElementById("library-shiny-check");
 const loadMoreButton = document.getElementById("library-load-more-button");
 
+let fullLibraryList = [];
+let currentLibraryList = [];
+
 // variables for saving collection in local storage
 const savedCollection = localStorage.getItem("collection");
 const collection = savedCollection ? JSON.parse(savedCollection) : [];
@@ -103,8 +106,8 @@ openBoxButton.addEventListener("click", async () => {
     pokemonShiny.textContent = isShiny ? "Yes" : "No";
 
     resultCardImage.src = isShiny 
-                        ? data.sprites.other.showdown.front_shiny || data.sprites.front_shiny
-                        : data.sprites.other.showdown.front_default || data.sprites.front_default;
+                        ? data.sprites.other.home.front_shiny || data.sprites.front_shiny
+                        : data.sprites.other.home.front_default || data.sprites.front_default;
     resultCardImage.alt = isShiny
                         ? `shiny ${data.name}`
                         : data.name;
@@ -161,8 +164,8 @@ function createCard(data, isShiny) {
 
     const sprite = document.createElement("img");
     sprite.src = isShiny
-                ? data.sprites.other.showdown.front_shiny || data.sprites.front_shiny
-                : data.sprites.other.showdown.front_default || data.sprites.front_default;
+                ? data.sprites.other.home.front_shiny || data.sprites.front_shiny
+                : data.sprites.other.home.front_default || data.sprites.front_default;
     sprite.alt = isShiny ? `shiny ${data.name}` : data.name;
 
     const name = document.createElement("p");
